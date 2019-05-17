@@ -1,0 +1,476 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <!-- Required meta tags -->
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+
+    <!-- Bootstrap CSS -->
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.0/css/bootstrap.min.css" integrity="sha384-PDle/QlgIONtM1aqA2Qemk5gPOE7wFq8+Em+G/hmo5Iq0CCmYZLv3fVRDJ4MMwEA" crossorigin="anonymous">
+    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.8.1/css/all.css" integrity="sha384-50oBUHEmvpQ+1lW4y57PTFmhCaXp0ML5d60M1M7uH2+nqUivzIebhndOJK28anvf" crossorigin="anonymous">
+
+    <title>Hello, world!</title>
+  </head>
+  <style>
+		#canvas-holder {
+			width: 100%;
+			margin-top: 50px;
+			text-align: center;
+		}
+		#chartjs-tooltip {
+			opacity: 1;
+			position: absolute;
+			background: rgba(0, 0, 0, .7);
+			color: white;
+			border-radius: 3px;
+			-webkit-transition: all .1s ease;
+			transition: all .1s ease;
+			pointer-events: none;
+			-webkit-transform: translate(-50%, 0);
+			transform: translate(-50%, 0);
+		}
+
+		.chartjs-tooltip-key {
+			display: inline-block;
+			width: 10px;
+			height: 10px;
+			margin-right: 10px;
+		}
+	</style>
+  <body>
+  	<!-- 第一層 介面導覽 -->
+   <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
+	  <a class="navbar-brand" href="#">控制後台</a>
+	  <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+	    <span class="navbar-toggler-icon"></span>
+	  </button>
+
+	  <div class="collapse navbar-collapse" id="navbarSupportedContent">
+	    <ul class="navbar-nav mr-auto">
+	      <li class="nav-item active">
+	        <a class="nav-link" href="#">Home <span class="sr-only">(current)</span></a>
+	      </li>
+	      <li class="nav-item">
+	        <a class="nav-link" href="#">Link</a>
+	      </li>
+	    </ul>
+	    <form class="form-inline my-2 my-lg-0">
+	      <input class="form-control mr-sm-2" type="search" placeholder="Search" aria-label="Search">
+	      <button class="btn btn-outline-success my-2 my-sm-0" type="submit">Search</button>
+	    </form>
+	  </div>
+	</nav>
+
+	<!-- 第二層 crad運用 圖與文字左右排版 -->
+	<div class="container-fluid mt-3">
+		<div class="row">
+			<div class="col-sm-3">
+				<div class="card">
+					<div class="card-body">
+						<div class="d-flex">
+							<div class="d-none d-md-block">
+								<i class="fas fa-hand-holding-usd fa-4x"></i>
+							</div>
+							<div class="text-center w-100">
+								<h3>今日營業額</h3>
+								<h3>$10,510</h3>
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+			<div class="col-sm-3">
+				<div class="card">
+					<div class="card-body">
+						<div class="d-flex">
+							<div class="d-none d-md-block">
+								<i class="fas fa-address-book fa-4x"></i>
+							</div>
+							<div class="text-center w-100">
+								<h3>會員人數</h3>
+								<h3>$80,059</h3>
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+			<div class="col-sm-3">
+				<div class="card text-danger">
+					<div class="card-body">
+						<div class="d-flex">
+							<div class="d-none d-md-block">
+								<i class="fas fa-sd-card fa-4x"></i>
+							</div>
+							<div class="text-center w-100">
+								<h3>今日暢銷商品</h3>
+								<h3>已賣出:531件</h3>
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+			<div class="col-sm-3">
+				<div class="card">
+					<div class="card-body">
+						<div class="d-flex">
+							<div class="d-none d-md-block">
+								<i class="fas fa-battery-three-quarters fa-4x"></i>
+							</div>
+							<div class="text-center w-100">
+								<h3>今日業績達成率</h3>
+								<h3>68%</h3>
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+
+	<!-- 第三層 圖表charts運用 -->
+	<div class="container-fluid">
+		<div class="row mt-3">
+			<div class="col-sm-9">
+				<div class="card">
+					<div class="card-header">會員點擊率來源</div>
+				
+					<div class="card-body">
+						<div class="row">
+							<div class="col-sm-8">
+								<canvas id="myChart"></canvas>
+							</div>
+							<div class="col-sm-4">
+								<h1>客層分析</h1>
+								<p>如有強烈手上排行地圖，總部每一個播放女士表面辦公室情況支付穩定大會無論強調之，溫度取得你也信息化衛生研究生會，戀愛完整。</p>
+								<h3>社會人士</h3>
+								<div class="progress">
+								 	 <div class="progress-bar" role="progressbar" style="width: 30%;" aria-valuenow="40" aria-valuemin="0" aria-valuemax="100">40%</div>
+								</div>
+								<h3>大學</h3>
+								<div class="progress">
+								 	 <div class="progress-bar bg-danger" role="progressbar" style="width: 30%;" aria-valuenow="30" aria-valuemin="0" aria-valuemax="100">30%</div>
+								</div>
+								<h3>高中職</h3>
+								<div class="progress">
+								 	 <div class="progress-bar bg-info" role="progressbar" style="width: 25%;" aria-valuenow="25" aria-valuemin="0" aria-valuemax="100">25%</div>
+								</div>
+								<h3>國中</h3>
+								<div class="progress">
+								 	 <div class="progress-bar bg-success" role="progressbar" style="width: 15%;" aria-valuenow="15" aria-valuemin="0" aria-valuemax="100">15%</div>
+								</div>
+
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+			<div class="col-sm-3">
+				<div class="card">
+					<div class="card-header">客戶地區分布圖</div>
+					<div class="card-body">
+						<div id="canvas-holder" style="width: 400px;">
+							<canvas id="chart-area" width="300" height="300"></canvas>
+							<div id="chartjs-tooltip">
+								<table></table>
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+
+	<!-- 第四層 表單製作與下拉式選單 -->
+	<div class="container-fluid mt-3">
+		<div class="row">
+			<div class="col-sm-12">
+				<div class="card">
+					<div class="card-header text-center text-danger"><h4>出貨項目與明細</h4></div>
+					<div class="card-body">
+						<div class="d-flex">
+							<div class="">
+								<select class="form-control form-control-sm">
+								  <option>1月</option><option>2月</option><option>3月</option><option>4月</option><option>5月</option><option>6月</option><option>7月</option><option>8月</option><option>9月</option><option>10月</option><option>11月</option><option>12月</option>
+								</select>
+							</div>
+							<div class="ml-auto mb-2">
+								<a href="#" class="btn btn-outline-primary mr-2">報表下載</a>
+								<a href="#" class="btn btn-outline-primary">訂單管理</a>
+							</div>
+						</div>
+						<table class="table table-hover">
+							<thead>
+								<tr>
+									<th>編號</th>
+									<th>日期</th>
+									<th>品名</th>
+									<th>單價</th>
+									<th>數量</th>
+									<th>總價</th>
+								</tr>
+			
+								<tr>
+									<th>01</th>
+									<td>01/14</td>
+									<td>跳跳玩玩樂</td>
+									<td>1,999</td>
+									<td>4</td>
+									<td>3996</td>
+								</tr>
+							
+								<tr>
+									<th>02</th>
+									<td>01/19</td>
+									<td>空拍機</td>
+									<td>199,999</td>
+									<td>1</td>
+									<td>199,999</td>
+								</tr>
+						
+								<tr>
+									<th>03</th>
+									<td>01/22</td>
+									<td>Gopro</td>
+									<td>6,999</td>
+									<td>2</td>
+									<td>13,998</td>
+								</tr>
+							
+								<tr>
+									<th>04</th>
+									<td>01/30</td>
+									<td>單眼相機RX</td>
+									<td>22,000</td>
+									<td>3</td>
+									<td>66,000</td>
+								</tr>
+								<tr class="text-right">
+									<td colspan="5">月總營收</td>
+									<td>500,000</td>
+								</tr>
+								<tr class="text-right">
+									<td colspan="5">總年度營收</td>
+									<td>65,854,000</td>
+								</tr>
+							</tbody>
+						</table>
+						<div class="d-flex">
+							<div class="">
+								<form class="form-inline my-2 my-lg-0">
+							      <input class="form-control mr-sm-2" type="search" placeholder="Search" aria-label="Search">
+							      <button class="btn btn-outline-success my-2 my-sm-0" type="submit">Search</button>
+							    </form>
+							</div>
+							<div class="ml-auto">
+								<a href="#" class="btn btn-primary">編輯訂單</a>
+							</div>
+						</div>	
+						<table class="table table-hover">
+							<thead>
+								<tr>
+									<th>編號</th>
+									<th>日期</th>
+									<th>品名</th>
+									<th>單價</th>
+									<th>數量</th>
+									<th>總價</th>
+									<th>操作</th>
+								</tr>
+							</thead>
+							<tbody>
+								<tr>
+									<td>01</td>
+									<td>05/12</td>
+									<td>雨傘</td>
+									<td>60</td>
+									<td>100</td>
+									<td>6,000</td>
+									<td>
+										<div class="btn-group">
+											<a href="#" class="btn btn-outline-primary">編輯</a>
+											<a href="#" class="btn btn-outline-secondary">查看</a>
+											<a href="#" class="btn btn-outline-danger">刪除</a>
+										</div>	
+									</td>
+								</tr>
+								<tr>
+									<td>02</td>
+									<td>08/22</td>
+									<td>雨衣</td>
+									<td>10</td>
+									<td>100</td>
+									<td>1,000</td>
+									<td>
+										<div class="btn-group">
+											<a href="#" class="btn btn-outline-primary">編輯</a>
+											<a href="#" class="btn btn-outline-secondary">查看</a>
+											<a href="#" class="btn btn-outline-danger">刪除</a>
+										</div>	
+									</td>
+								</tr>
+								<tr>
+									<td>03</td>
+									<td>07/01</td>
+									<td>雨鞋</td>
+									<td>100</td>
+									<td>50</td>
+									<td>5,000</td>
+									<td>
+										<div class="btn-group">
+											<a href="#" class="btn btn-outline-primary">編輯</a>
+											<a href="#" class="btn btn-outline-secondary">查看</a>
+											<a href="#" class="btn btn-outline-danger">刪除</a>
+										</div>	
+									</td>
+								</tr>
+								<tr class="text-right">
+									<td colspan="6">月總營收</td>
+									<td>6,666,666</td>
+								</tr>
+								<tr class="text-right">
+									<td colspan="6">月淨利潤</td>
+									<td>4,505,485</td>
+								</tr>
+							</tbody>
+						</table>
+					</div>
+				</div>	
+			</div>
+		</div>
+	</div>
+
+    <!-- Optional JavaScript -->
+    <!-- jQuery first, then Popper.js, then Bootstrap JS -->
+    <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js" integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1" crossorigin="anonymous"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.0/js/bootstrap.min.js" integrity="sha384-7aThvCh9TypR7fIc2HV4O/nFMVCBwyIUKL8XCtKE+8xgCgl/PQGuFsvShjr74PBp" crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js@2.8.0"></script>
+	<script src="js/utils.js"></script>
+    <!-- 長條圖程式碼 -->
+    <script>
+    	var ctx = document.getElementById('myChart').getContext('2d');
+		var chart = new Chart(ctx, {
+		    // The type of chart we want to create
+		    type: 'line',
+		    
+
+		    // The data for our dataset
+		    data: {
+		        labels: ['Facebook', 'Youtube', 'IG', 'ptt', 'Mobeil01', '蘋果新聞', '其他'],
+		        datasets: [{
+		            label: '網站點擊來源',
+		            backgroundColor: 'rgba(0, 100, 100,0.2)',
+		            borderColor: 'rgb(200, 0, 220)',
+		            data: [10, 25, 20, 2, 20, 25, 5]
+		        }]
+		    },
+
+		    // Configuration options go here
+		    options: {}
+		});
+   </script>
+   <!-- 圓餅圖程式碼 -->
+   <script>
+		Chart.defaults.global.tooltips.custom = function(tooltip) {
+			// Tooltip Element
+			var tooltipEl = document.getElementById('chartjs-tooltip');
+
+			// Hide if no tooltip
+			if (tooltip.opacity === 0) {
+				tooltipEl.style.opacity = 0;
+				return;
+			}
+
+			// Set caret Position
+			tooltipEl.classList.remove('above', 'below', 'no-transform');
+			if (tooltip.yAlign) {
+				tooltipEl.classList.add(tooltip.yAlign);
+			} else {
+				tooltipEl.classList.add('no-transform');
+			}
+
+			function getBody(bodyItem) {
+				return bodyItem.lines;
+			}
+
+			// Set Text
+			if (tooltip.body) {
+				var titleLines = tooltip.title || [];
+				var bodyLines = tooltip.body.map(getBody);
+
+				var innerHtml = '<thead>';
+
+				titleLines.forEach(function(title) {
+					innerHtml += '<tr><th>' + title + '</th></tr>';
+				});
+				innerHtml += '</thead><tbody>';
+
+				bodyLines.forEach(function(body, i) {
+					var colors = tooltip.labelColors[i];
+					var style = 'background:' + colors.backgroundColor;
+					style += '; border-color:' + colors.borderColor;
+					style += '; border-width: 2px';
+					var span = '<span class="chartjs-tooltip-key" style="' + style + '"></span>';
+					innerHtml += '<tr><td>' + span + body + '</td></tr>';
+				});
+				innerHtml += '</tbody>';
+
+				var tableRoot = tooltipEl.querySelector('table');
+				tableRoot.innerHTML = innerHtml;
+			}
+
+			var positionY = this._chart.canvas.offsetTop;
+			var positionX = this._chart.canvas.offsetLeft;
+
+			// Display, position, and set styles for font
+			tooltipEl.style.opacity = 1;
+			tooltipEl.style.left = positionX + tooltip.caretX + 'px';
+			tooltipEl.style.top = positionY + tooltip.caretY + 'px';
+			tooltipEl.style.fontFamily = tooltip._bodyFontFamily;
+			tooltipEl.style.fontSize = tooltip.bodyFontSize;
+			tooltipEl.style.fontStyle = tooltip._bodyFontStyle;
+			tooltipEl.style.padding = tooltip.yPadding + 'px ' + tooltip.xPadding + 'px';
+		};
+
+		var config = {
+			type: 'pie',
+			data: {
+				datasets: [{
+					data: [300, 50, 100, 220, 200,20],
+					backgroundColor: [
+						window.chartColors.red,
+						window.chartColors.orange,
+						window.chartColors.yellow,
+						window.chartColors.green,
+						window.chartColors.blue,
+						window.chartColors.white,
+
+					],
+				}],
+				labels: [
+					'台北市',
+					'新北市',
+					'桃園縣',
+					'台中市',
+					'高雄市(發大財)',
+					'澎湖縣'
+				]
+			},
+			options: {
+				responsive: true,
+				legend: {
+					display: true
+				},
+				tooltips: {
+					enabled: false,
+				}
+			}
+		};
+
+		window.onload = function() {
+			var ctx = document.getElementById('chart-area').getContext('2d');
+			window.myPie = new Chart(ctx, config);
+		};
+	</script>
+  </body>
+</html>
